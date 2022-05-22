@@ -71,4 +71,8 @@ public class Label {
     return getAllLabels;
   }
 
+  @Override
+  public String toString() {
+    return name;
+  }
 }

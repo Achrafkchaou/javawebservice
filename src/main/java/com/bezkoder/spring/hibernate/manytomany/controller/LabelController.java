@@ -72,7 +72,7 @@ public class LabelController {
 
     }
 
-    @PostMapping("/entry/label")
+    @PostMapping("/entry/{entryId}/label")
     public Label addLabel(@PathVariable(value = "entryId") long entryId,
             @RequestBody Label labelRequest) {
         return entryRepository.findById(entryId).map(entry -> {
