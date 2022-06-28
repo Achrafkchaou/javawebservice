@@ -17,15 +17,16 @@ public class Label {
   private long id;
 
   @Column(name = "id_ext")
-  private Long idExt;
+  private long idExt;
 
   @Column(name = "name")
   private String name;
   @ManyToMany(fetch = FetchType.LAZY, cascade = {
       CascadeType.PERSIST,
       CascadeType.MERGE
-  }) // , mappedBy = "Label")
-
+  })
+  @JoinTable(name = "assoc", joinColumns = { @JoinColumn(name = " entry_id ") }, inverseJoinColumns = {
+      @JoinColumn(name = "label_id") })
   private Set<Entry> entrys = new HashSet<>();
 
   public Label() {
@@ -47,7 +48,7 @@ public class Label {
     return idExt;
   }
 
-  public void setIdExt(Long idExt) {
+  public void setIdExt(long idExt) {
     this.idExt = idExt;
   }
 

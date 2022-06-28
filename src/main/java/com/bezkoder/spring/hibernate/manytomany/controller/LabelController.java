@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.bezkoder.spring.hibernate.manytomany.exception.ResourceNotFoundException;
@@ -38,14 +40,14 @@ public class LabelController {
 
     }
 
-    @GetMapping("/entry/{entryId}/label")
-    public List<Label> getAllLabelsByEntryId(@PathVariable(value = "entryId") Long entryId) {
+    @GetMapping("/entry/id/{entryId}/label")
+    public ResponseEntity<List<Label>> getAllLabelsByEntryId(@PathVariable(value = "entryId") Long entryId) {
         if (!entryRepository.existsById(entryId)) {
             throw new ResourceNotFoundException("Not found entry with id = " + entryId);
         }
         List<Label> labels = labelRepository.findLabelsByEntrysId(entryId);
-        // return new ResponseEntity<>(labels, HttpStatus.OK);
-        return labels;
+        return new ResponseEntity<>(labels, HttpStatus.OK);
+
     }
 
     @GetMapping("/label/id/{labelId}/entry")
@@ -60,19 +62,19 @@ public class LabelController {
     @GetMapping("/label/id/{id}")
     public Label getLabelsById(@PathVariable(value = "id") Long id) {
         return labelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found Label with id = " +
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Label with id = "
+                        +
                         id));
-
     }
 
-    @GetMapping("/label/extid/{id_ext}")
-    public Label getLabelByExtId(@PathVariable("id_ext") long idExt) {
+    @GetMapping("/label/extid/{idExt}")
+    public Label getLabelByExtId(@PathVariable("idExt") long idExt) {
         return labelRepository.findByIdExt(idExt)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found Label with id_ext = " + idExt));
 
     }
 
-    @PostMapping("/entry/{entryId}/label")
+    @PostMapping("/entry/id/{entryId}/label")
     public Label addLabel(@PathVariable(value = "entryId") long entryId,
             @RequestBody Label labelRequest) {
         return entryRepository.findById(entryId).map(entry -> {
@@ -93,8 +95,8 @@ public class LabelController {
         }).orElseThrow(() -> new ResourceNotFoundException("Not found Entry with id = " + entryId));
     }
 
-    @PostMapping("/entry/extid/{id_ext}/label")
-    public Label addLabell(@PathVariable(value = "id_ext") long idExt,
+    @PostMapping("/entry/extid/{idExt}/label")
+    public Label addLabell(@PathVariable(value = "idExt") long idExt,
             @RequestBody Label labelRequest) {
         return entryRepository.findById(idExt).map(entry -> {
             long labelId = labelRequest.getId();
@@ -107,11 +109,10 @@ public class LabelController {
                 return _label;
             }
             // add and create new Label
-
             // pour ajouter les id dans la table assoc
             entry.addLabel(labelRequest);
             return labelRepository.save(labelRequest);
-        }).orElseThrow(() -> new ResourceNotFoundException("Not found Entry with id = " + idExt));
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found Entry with id externe = " + idExt));
     }
 
     @PutMapping("/label/id/{id}")

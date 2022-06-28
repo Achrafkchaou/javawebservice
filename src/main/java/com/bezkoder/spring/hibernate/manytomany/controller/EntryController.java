@@ -75,14 +75,6 @@ public class EntryController {
 
   }
 
-  // @DeleteMapping("/entry/id/{id}")
-  // public String deleteEntryid(@PathVariable("id") long id) {
-  // entryRepository.deleteById(id);
-
-  // return "entry is deleted by id : " + id;
-  // }
-  // *************
-
   @DeleteMapping("/entry/id/{id}")
   public String deleteEntryid(@PathVariable("id") long id) {
     entryRepository.findById(id)

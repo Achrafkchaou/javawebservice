@@ -15,7 +15,7 @@ public class Entry {
   private long id;
 
   @Column(name = "id_ext")
-  private Long idExt;
+  private long idExt;
 
   @Column(name = "text")
   private String text;
@@ -25,7 +25,7 @@ public class Entry {
       CascadeType.MERGE
   })
   @JoinTable(name = "assoc", joinColumns = { @JoinColumn(name = "entry_id") }, inverseJoinColumns = {
-      @JoinColumn(name = "label_id") })
+    @JoinColumn(name = "label_id") })
   private Set<Label> labels = new HashSet<>();
 
   public Entry() {
@@ -64,7 +64,7 @@ public class Entry {
     return idExt;
   }
 
-  public void setExtId(Long idExt) {
+  public void setExtId(long idExt) {
     this.idExt = idExt;
   }
 
@@ -80,8 +80,8 @@ public class Entry {
     return labels;
   }
 
-  public void setLabels(Set<Label> label) {
-    this.labels = label;
+  public void setLabels(Set<Label> labels) {
+    this.labels = labels;
   }
 
   @Override

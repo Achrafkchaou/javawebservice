@@ -15,4 +15,6 @@ public interface LabelRepository extends JpaRepository<Label, Long> {
 
     Optional<Label> findByIdExt(long idExt);
 
+    Iterable<Label> findByNameContaining(String name);
+
 }

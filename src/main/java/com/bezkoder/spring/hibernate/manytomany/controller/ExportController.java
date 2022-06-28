@@ -32,7 +32,7 @@ public class ExportController {
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=entrys_" + currentDateTime + ".csv";
+        String headerValue = "attachment; filename=dataset_" + currentDateTime + ".csv";
         response.setHeader(headerKey, headerValue);
 
         List<Entry> listEntrys = service.listAll();
